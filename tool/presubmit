@@ -1,0 +1,55 @@
+set -e
+
+directories="built_union built_union_generator"
+
+parent_directory=$PWD
+
+for directory in $directories; do
+  echo
+  echo "*** Formatting $directory..."
+  echo
+  cd "$parent_directory/$directory"
+
+  dartfmt -w $(find bin lib test -name \*.dart 2>/dev/null)
+done
+
+for directory in $directories; do
+  echo
+  echo "*** Building $directory..."
+  echo
+  cd "$parent_directory/$directory"
+
+  pub get
+  pub upgrade
+
+  # Clear any pre-existing build output so package:build doesn't get confused
+  # when we use built_value to build itself.
+  rm -rf .dart_tool/build/
+
+  grep -q build_runner pubspec.yaml && \
+      pub run build_runner build \
+          --delete-conflicting-outputs \
+          --fail-on-severe
+done
+
+for directory in $directories; do
+  echo
+  echo "*** Analyzing $directory..."
+  echo
+  cd "$parent_directory/$directory"
+
+  dartanalyzer \
+      --fatal-warnings \
+      --fatal-infos \
+      --packages="$PWD/.packages" \
+      $(find bin lib test -name \*.dart 2>/dev/null)
+done
+
+for directory in $directories; do
+  echo
+  echo "*** Testing $directory..."
+  echo
+  cd "$parent_directory/$directory"
+
+  pub run test
+done
