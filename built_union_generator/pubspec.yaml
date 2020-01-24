@@ -11,5 +11,5 @@ dependencies:
 
 
 dev_dependencies:
-  build_runner: ^1.0.0
+    # b#uild_runner: ^1.0.0
   built_value_generator: ^7.0.6
