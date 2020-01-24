@@ -1,0 +1,13 @@
+name: built_union_generator
+
+environment:
+  sdk: '>=2.6.0 <3.0.0'
+
+dependencies:
+  built_value: ^7.0.6
+  built_collection: '>=2.0.0 <5.0.0'
+
+
+dev_dependencies:
+  build_runner: ^1.0.0
+  built_value_generator: ^7.0.6
