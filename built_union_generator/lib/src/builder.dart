@@ -5,7 +5,6 @@ import 'package:source_gen/source_gen.dart';
 import 'package:built_union/built_union.dart' as annotations show BuiltUnion;
 
 import 'union_spec.dart';
-import 'utils.dart';
 
 Builder BuiltUnionBuilder(BuilderOptions options) =>
     SharedPartBuilder([BuiltUnionGenerator()], 'built_union');
@@ -151,8 +150,7 @@ String generateClassConstructor(String className, String enumName, VariantSpec v
   // Add List of arguments:
   List<String> args = [];
   for (final argSpec in variant.variantArgs) {
-    final argTypeName = getDartTypeName(argSpec.argType);
-    args.add('${argTypeName} ${argSpec.argName}');
+    args.add('${argSpec.argType.toString()} ${argSpec.argName}');
   }
   res.add(args.join(','));
   res.add('): ');
@@ -260,35 +258,9 @@ String generateMatch(UnionSpec unionSpec) {
 ///   final _$SimpleUnionType _type;
 ///   final List<Object> _values;
 /// 
-///   _$SimpleUnion.empty(): _type = _$SimpleUnionType.empty, _values = [];
-///   _$SimpleUnion.integer(int integer): _type = _$SimpleUnionType.integer, _values = [integer];
-///   _$SimpleUnion.tuple(int tupleInteger, String tupleString): _type = _$SimpleUnionType.tuple, _values = [tupleInteger, tupleString];
-///   _$SimpleUnion.string(String string): _type = _$SimpleUnionType.string, _values = [string];
-///   _$SimpleUnion.listInt(BuiltList<int> listInt): _type = _$SimpleUnionType.listInt, _values = [listInt];
-/// 
-///   T match<T>({
-///     @required T Function() empty,
-///     @required T Function(int) integer,
-///     @required T Function(int, String) tuple,
-///     @required T Function(String) string,
-///     @required T Function(BuiltList<int>) listInt,
-///   }) {
-///     switch (_type) {
-///       case _$SimpleUnionType.empty:
-///         return empty();
-///       case _$SimpleUnionType.integer:
-///         return integer(_values[0]);
-///       case _$SimpleUnionType.tuple:
-///         return tuple(_values[0], _values[1]);
-///       case _$SimpleUnionType.string:
-///         return string(_values[0]);
-///       case _$SimpleUnionType.listInt:
-///         return fooInt(_values[0]);
-///       default:
-///         // TODO: Better exception to throw here?
-///         throw Exception('unknown type');
-///     }
-///   }
+///   // ... Constructors ...
+///   
+///   // ... Match method ...
 /// 
 ///   bool get isEmpty => _type == _$SimpleUnionType.empty;
 ///   bool get isInteger => _type == _$SimpleUnionType.integer;
