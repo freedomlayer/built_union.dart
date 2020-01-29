@@ -351,7 +351,6 @@ String generateEqualOperator(String className) {
     }
   }
   ''';
-
 }
 
 /// Generate union base class
