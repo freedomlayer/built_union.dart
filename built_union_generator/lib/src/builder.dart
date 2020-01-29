@@ -247,6 +247,8 @@ String generateMatch(UnionSpec unionSpec) {
 
   res.add('T match<T>({');
 
+  // TODO: Continue here
+
   return res.join('\n');
 }
 
