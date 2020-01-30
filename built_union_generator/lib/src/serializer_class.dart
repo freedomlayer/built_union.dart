@@ -77,32 +77,10 @@ String generateSerializeMatchArm(VariantSpec variantSpec) {
 /// Iterable<Object> serialize(Serializers serializers, SimpleUnion object,
 ///     {FullType specifiedType = FullType.unspecified}) {
 ///   return object.match(
-///       empty: () => <Object>['empty'],
-///       integer: (value0) => <Object>[
-///             'integer',
-///             serializers.serialize(value0, specifiedType: const FullType(int))
-///           ],
-///       tuple: (value0, value1) => <Object>[
-///             'tuple',
-///             <Object>[serializers.serialize(value0, specifiedType: const FullType(int)),
-///             serializers.serialize(value1,
-///                 specifiedType: const FullType(String))]
-///           ],
-///       string: (value0) => <Object>[
-///             'string',
-///             serializers.serialize(value0,
-///                 specifiedType: const FullType(String))
-///           ],
-///       fooInt: (value0) {
-///         return <Object>[
-///           'fooInt',
-///           serializers.serialize(value0, specifiedType: const FullType(Foo))
-///         ];
-///       },
-///       fooString: (value0) => <Object>[
-///             'fooString',
-///             serializers.serialize(value0, specifiedType: const FullType(Foo))
-///           ]);
+///
+///       // ... match arms ...
+///
+///   );
 /// }
 /// ```
 String generateSerializeMethod(UnionSpec unionSpec) {
@@ -116,6 +94,7 @@ String generateSerializeMethod(UnionSpec unionSpec) {
   // Begin match:
   res.add('return object.match(');
 
+  // Generate match arms:
   for (final variant in unionSpec.variants) {
     res.add(generateSerializeMatchArm(variant));
   }
@@ -222,38 +201,9 @@ String generateDeserializeSwitchCase(
 ///   iterator.moveNext();
 ///   var result;
 ///   switch (key) {
-///     case 'empty':
-///       result = SimpleUnion.empty();
-///       break;
-///     case 'integer':
-///       iterator.moveNext();
-///       result = SimpleUnion.integer(serializers.deserialize(iterator.current,
-///           specifiedType: const FullType(int)));
-///       break;
-///     case 'tuple':
-///       final iterator = (iterator.current as Iterable<Object>).iterator;
-///       iterator.moveNext();
-///       final dynamic value0 = iterator.current;
-///       iterator.moveNext();
-///       final dynamic value1 = iterator.current;
 ///
-///       result = SimpleUnion.tuple(
-///           serializers.deserialize(value0, specifiedType: const FullType(int)),
-///           serializers.deserialize(value1,
-///               specifiedType: const FullType(String)));
-///       break;
-///     case 'string':
-///       result = SimpleUnion.integer(serializers.deserialize(value,
-///           specifiedType: const FullType(String)));
-///       break;
-///     case 'fooInt':
-///       result = SimpleUnion.fooInt(serializers.deserialize(value,
-///           specifiedType: const FullType(Foo)));
-///       break;
-///     case 'fooString':
-///       result = SimpleUnion.fooInt(serializers.deserialize(value,
-///           specifiedType: const FullType(Foo)));
-///       break;
+///     // ... cases ...
+///
 ///     default:
 ///       throw Exception('Unknown variant $key');
 ///   }
