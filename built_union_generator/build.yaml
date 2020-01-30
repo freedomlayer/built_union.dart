@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      built_union_generator|built_union:
+        enabled: true
+
+builders:
+  built_value:
+    target: ":built_union_generator"
+    import: "package:built_union_generator/built_union_generator.dart"
+    builder_factories: ["builtUnionBuilder"]
+    build_extensions: {".dart": [".built_union.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
