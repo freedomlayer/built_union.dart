@@ -3,21 +3,6 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
 
-/*
-// Example union:
-
-@BuiltUnion()
-class SimpleUnion extends _$SimpleUnion {
-  static Serializer<SimpleUnion> get serializer => _$simpleUnionSerializer;
-
-  SimpleUnion.empty(): super.empty();
-  SimpleUnion.integer(int integer): super.integer(integer);
-  SimpleUnion.tuple(int tupleInt, String tupleString): super.tuple(tupleInt, tupleString);
-  SimpleUnion.string(String string): super.string(string);
-  SimpleUnion.listInt(BuiltList<int> listInt): super.listInt(listInt);
-}
-*/
-
 /// Information about one argument for one variant of a union
 /// Example: 
 /// `Foo<int> fooInt`
