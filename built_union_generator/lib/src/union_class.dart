@@ -307,7 +307,7 @@ String generateUnionClass(UnionSpec unionSpec) {
 
   // Class state: _type and _values:
   res.add('\tfinal ${calcClassName(unionSpec)} _type;');
-  res.add('\tfinal List<object> _values;');
+  res.add('\tfinal List<Object> _values;');
 
   res.add(generateClassConstructors(unionSpec));
   res.add(generateMatch(unionSpec));
