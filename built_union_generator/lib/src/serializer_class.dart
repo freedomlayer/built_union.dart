@@ -167,7 +167,7 @@ String generateDeserializeSwitchCase(
   res.add(variantSpec.variantArgs
       .map((argSpec) =>
           'innerIterator.moveNext();\n' +
-          'final dynamic ${argSpec.argName} = innerIterator.current;')
+          'final ${argSpec.argType.toString()} ${argSpec.argName} = innerIterator.current as ${argSpec.argType.toString()};')
       .join('\n'));
 
   // Instantiate variant:
