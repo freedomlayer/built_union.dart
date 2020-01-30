@@ -131,11 +131,11 @@ String generateSerializeMethod(UnionSpec unionSpec) {
 /// 3) Multiple values variant:
 /// ```
 /// case 'tuple':
-///   final iterator = (iterator.current as Iterable<Object>).iterator;
-///   iterator.moveNext();
-///   final dynamic value0 = iterator.current;
-///   iterator.moveNext();
-///   final dynamic value1 = iterator.current;
+///   final innerIterator = (iterator.current as Iterable<Object>).iterator;
+///   innerIterator.moveNext();
+///   final dynamic value0 = innerIterator.current;
+///   innerIterator.moveNext();
+///   final dynamic value1 = innerIterator.current;
 ///
 ///   result = SimpleUnion.tuple(
 ///       serializers.deserialize(value0, specifiedType: const FullType(int)),
@@ -166,13 +166,13 @@ String generateDeserializeSwitchCase(
   // A variant with multiple values
   List<String> res = [];
   res.add('''case '${variantSpec.variantName}':''');
-  res.add('final iterator = (iterator.current as Iterable).iterator;');
+  res.add('final innerIterator = (iterator.current as Iterable).iterator;');
 
   // Obtain all values:
   res.add(variantSpec.variantArgs
       .map((argSpec) =>
-          'iterator.moveNext();\n' +
-          'final dynamic ${argSpec.argName} = iterator.current;')
+          'innerIterator.moveNext();\n' +
+          'final dynamic ${argSpec.argName} = innerIterator.current;')
       .join('\n'));
 
   // Instantiate variant:
