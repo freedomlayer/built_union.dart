@@ -24,8 +24,7 @@ class SimpleUnion extends _$SimpleUnion {
   SimpleUnion.integer(int integer): super.integer(integer);
   SimpleUnion.tuple(int tupleInt, String tupleString): super.tuple(tupleInt, tupleString);
   SimpleUnion.string(String string): super.string(string);
-  SimpleUnion.fooInt(Foo<int> fooInt): super.fooInt(fooInt);
-  SimpleUnion.fooString(Foo<String> fooString): super.fooString(fooString);
+  SimpleUnion.builtList(BuiltList<int> builtList): super.builtList(builtList);
 }
 
 
