@@ -46,7 +46,7 @@ String generateClassConstructor(
   res.add('_type = $enumName.${variant.variantName}, ');
 
   // Set values:
-  res.add('values = [');
+  res.add('_values = [');
 
   // Collect all values:
   List<String> values = [];
