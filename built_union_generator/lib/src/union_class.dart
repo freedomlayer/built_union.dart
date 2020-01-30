@@ -306,7 +306,7 @@ String generateUnionClass(UnionSpec unionSpec) {
   res.add('abstract class ${calcClassName(unionSpec)} {');
 
   // Class state: _type and _values:
-  res.add('\tfinal ${calcClassName(unionSpec)} _type;');
+  res.add('\tfinal ${calcEnumName(unionSpec)} _type;');
   res.add('\tfinal List<Object> _values;');
 
   res.add(generateClassConstructors(unionSpec));
