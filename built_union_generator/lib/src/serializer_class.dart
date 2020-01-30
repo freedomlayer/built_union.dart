@@ -1,4 +1,5 @@
 import 'union_spec.dart';
+import 'utils.dart';
 
 /// Change first letter of a string to be lower case
 String decapitalize(String inputStr) {
@@ -7,12 +8,6 @@ String decapitalize(String inputStr) {
   } else {
     return inputStr[0].toLowerCase() + inputStr.substring(1);
   }
-}
-
-/// Strip type generics from type's name
-/// Example: Input: `MyType<T,S>`, Ouptput: `MyType`
-String stripGenerics(String typeName) {
-  return typeName.split('<')[0];
 }
 
 /// Generate one match arm code for the serialize method.
@@ -50,7 +45,7 @@ String generateSerializeMatchArm(VariantSpec variantSpec) {
     /// This variant contains exactly one argument
     final argSpec = variantSpec.variantArgs[0];
     return '''${variantSpec.variantName}: (${argSpec.argName}) => <Object>['${variantSpec.variantName}',\n''' +
-        'serializers.serialize(${argSpec.argName}, specifiedType: const FullType(${stripGenerics(argSpec.argType.toString())}))\n' +
+        'serializers.serialize(${argSpec.argName}, specifiedType: ${generateFullType(argSpec.argType.toString())})\n' +
         '],';
   }
 
@@ -63,7 +58,7 @@ String generateSerializeMatchArm(VariantSpec variantSpec) {
   res.add('<Object>[');
   res.add(variantSpec.variantArgs
       .map((argSpec) =>
-          'serializers.serialize(${argSpec.argName}, specifiedType: const FullType(${stripGenerics(argSpec.argType.toString())}))')
+          'serializers.serialize(${argSpec.argName}, specifiedType: ${generateFullType(argSpec.argType.toString())})')
       .join(','));
   res.add(']');
   res.add('],');
@@ -159,7 +154,7 @@ String generateDeserializeSwitchCase(
         'iterator.moveNext();\n' +
         'result = $userClassName.${variantSpec.variantName}(' +
         'serializers.deserialize(iterator.current, ' +
-        'specifiedType: const FullType(${stripGenerics(argSpec.argType.toString())})));\n' +
+        'specifiedType: ${generateFullType(argSpec.argType.toString())}));\n' +
         'break;';
   }
 
@@ -180,7 +175,7 @@ String generateDeserializeSwitchCase(
   res.add(variantSpec.variantArgs
       .map((argSpec) =>
           'serializers.deserialize(${argSpec.argName},' +
-          'specifiedType: const FullType(${stripGenerics(argSpec.argType.toString())})),')
+          'specifiedType: ${generateFullType(argSpec.argType.toString())}),')
       .join('\n'));
   res.add(');');
   res.add('break;');
