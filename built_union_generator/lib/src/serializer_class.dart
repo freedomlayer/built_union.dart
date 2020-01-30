@@ -161,6 +161,7 @@ String generateDeserializeSwitchCase(
   // A variant with multiple values
   List<String> res = [];
   res.add('''case '${variantSpec.variantName}':''');
+  res.add('iterator.moveNext();');
   res.add('final innerIterator = (iterator.current as Iterable).iterator;');
 
   // Obtain all values:
