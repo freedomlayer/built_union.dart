@@ -48,7 +48,6 @@ class UnionSpec {
 }
 
 VariantSpec __makeVariantSpec(ConstructorElement ctor) {
-  print(ctor);
   final variantArgs = ctor.parameters.map((param) => ArgSpec(argName: param.name, argType: param.type));
   return VariantSpec(
       variantName: ctor.name,
