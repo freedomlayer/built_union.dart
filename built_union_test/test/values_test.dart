@@ -96,7 +96,6 @@ void main() {
 
       for (final simpleUnion in simpleUnions) {
         final serialized = serializers.serialize(simpleUnion, specifiedType: FullType(SimpleUnion));
-        print(serialized);
         final simpleUnion2 = serializers.deserialize(serialized, specifiedType: FullType(SimpleUnion));
         expect(simpleUnion, simpleUnion2);
         // var json = serializersWithPlugin.serialize(myStruct, specifiedType: FullType(MyStruct));
