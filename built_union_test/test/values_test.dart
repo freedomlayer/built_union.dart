@@ -85,7 +85,7 @@ void main() {
 
     test('SimpleUnion serialization', () {
       final simpleUnions = [
-        // SimpleUnion.empty(),
+        SimpleUnion.empty(),
         SimpleUnion.integer(3),
         SimpleUnion.tuple(4, 'four'),
         SimpleUnion.string('string'),
@@ -99,8 +99,8 @@ void main() {
         print(serialized);
         final simpleUnion2 = serializers.deserialize(serialized, specifiedType: FullType(SimpleUnion));
         expect(simpleUnion, simpleUnion2);
+        // var json = serializersWithPlugin.serialize(myStruct, specifiedType: FullType(MyStruct));
       }
-      // var json = serializersWithPlugin.serialize(myStruct, specifiedType: FullType(MyStruct));
     });
   });
 }
