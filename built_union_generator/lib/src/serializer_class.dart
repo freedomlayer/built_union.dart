@@ -205,7 +205,7 @@ String generateDeserializeSwitchCase(
 ///     // ... cases ...
 ///
 ///     default:
-///       throw Exception('Unknown variant $key');
+///       throw StateError('Unknown variant $key');
 ///   }
 ///
 ///   return result;
@@ -236,7 +236,7 @@ String generateDeserializeMethod(UnionSpec unionSpec) {
   // Default case:
   res.add('default:');
   // TODO: Possibly throw a different kind of exception?
-  res.add('''throw Exception('Unknown variant \$key');''');
+  res.add('''throw StateError('Unknown variant \$key');''');
 
   // TOOD: Add default case
   res.add('}');

@@ -142,7 +142,7 @@ String generateMatchCase(String enumName, VariantSpec variantSpec) {
 ///     case _$SimpleUnionType.fooString:
 ///       return fooString(_values[0]);
 ///     default:
-///       throw Exception('unknown type');
+///       throw StateError('unknown type');
 ///   }
 /// }
 /// ```
@@ -174,7 +174,7 @@ String generateMatch(UnionSpec unionSpec) {
   res.add('default:');
 
   // TODO: Possibly get a better exception here?
-  res.add('''throw Exception('${unionSpec.unionName}: Unknown type');''');
+  res.add('''throw StateError('${unionSpec.unionName}: Unknown type');''');
 
   // End switch statement:
   res.add('}');
