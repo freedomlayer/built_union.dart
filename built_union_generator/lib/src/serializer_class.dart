@@ -50,7 +50,7 @@ String generateSerializeMatchArm(VariantSpec variantSpec) {
     /// This variant contains exactly one argument
     final argSpec = variantSpec.variantArgs[0];
     return '''${variantSpec.variantName}: (${argSpec.argName}) => <Object>['${variantSpec.variantName}',\n''' +
-        'serializers.serialize(value, specifiedType: const FullType(${stripGenerics(argSpec.argType.toString())}))\n' +
+        'serializers.serialize(${argSpec.argName}, specifiedType: const FullType(${stripGenerics(argSpec.argType.toString())}))\n' +
         '],';
   }
 
@@ -221,11 +221,9 @@ String generateDeserializeMethod(UnionSpec unionSpec) {
   res.add('{FullType specifiedType = FullType.unspecified}) {');
 
   // Some variables:
-  res.add('final interator = serialized.iterator;');
+  res.add('final iterator = serialized.iterator;');
   res.add('iterator.moveNext();');
   res.add('final key = iterator.current as String;');
-  res.add('iterator.moveNext();');
-  res.add('final Object value = iterator.current;');
   res.add('var result;');
 
   res.add('switch (key) {');
