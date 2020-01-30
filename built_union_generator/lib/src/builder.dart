@@ -8,7 +8,7 @@ import 'union_class.dart';
 import 'serializer_class.dart';
 import 'union_spec.dart';
 
-Builder BuiltUnionBuilder(BuilderOptions options) =>
+Builder builtUnionBuilder(BuilderOptions options) =>
     SharedPartBuilder([BuiltUnionGenerator()], 'built_union');
 
 class BuiltUnionGenerator
