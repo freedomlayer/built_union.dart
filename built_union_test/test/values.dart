@@ -31,7 +31,6 @@ class SimpleUnion extends _$SimpleUnion {
 abstract class CompoundValue
     implements Built<CompoundValue, CompoundValueBuilder> {
   SimpleValue get simpleValue;
-  String get string;
   SimpleUnion get simpleUnion;
 
   factory CompoundValue([Function(CompoundValueBuilder) updates]) =
