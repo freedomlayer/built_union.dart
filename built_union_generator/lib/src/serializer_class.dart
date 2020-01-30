@@ -282,6 +282,12 @@ String generateDeserializeMethod(UnionSpec unionSpec) {
   for (final variant in unionSpec.variants) {
     res.add(generateDeserializeSwitchCase(unionSpec.unionName, variant));
   }
+
+  // Default case:
+  res.add('default:');
+  // TODO: Possibly throw a different kind of exception?
+  res.add('''throw Exception('Unknown variant \$key');''');
+
   // TOOD: Add default case
   res.add('}');
 
