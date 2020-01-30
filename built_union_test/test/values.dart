@@ -9,6 +9,8 @@ import 'package:meta/meta.dart';
 part 'values.g.dart';
 
 abstract class SimpleValue implements Built<SimpleValue, SimpleValueBuilder> {
+  static Serializer<SimpleValue> get serializer => _$simpleValueSerializer;
+
   int get anInt;
   BuiltList<String> get list;
 
@@ -30,6 +32,8 @@ class SimpleUnion extends _$SimpleUnion {
 
 abstract class CompoundValue
     implements Built<CompoundValue, CompoundValueBuilder> {
+  static Serializer<CompoundValue> get serializer => _$compoundValueSerializer;
+
   SimpleValue get simpleValue;
   SimpleUnion get simpleUnion;
 
@@ -37,3 +41,12 @@ abstract class CompoundValue
       _$CompoundValue;
   CompoundValue._();
 }
+
+Serializers serializers = (new Serializers().toBuilder()
+      ..add(SimpleValue.serializer)
+      ..add(SimpleUnion.serializer)
+      ..add(CompoundValue.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(int)]),
+          () => new ListBuilder<int>()))
+    .build();
