@@ -143,7 +143,7 @@ String generateDeserializeSwitchCase(
   if (variantSpec.variantArgs.isEmpty) {
     // Empty variant
     return '''case '${variantSpec.variantName}':\n''' +
-        '$userClassName.${variantSpec.variantName}();\n' +
+        'result = $userClassName.${variantSpec.variantName}();\n' +
         'break;';
   }
 
