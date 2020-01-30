@@ -1,6 +1,9 @@
 // import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:built_value/standard_json_plugin.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:test/test.dart';
+
 
 import 'values.dart';
 
@@ -78,6 +81,26 @@ void main() {
           string: (_) => false,
           builtList: (_) => true);
       expect(resBuiltList, true);
+    });
+
+    test('SimpleUnion serialization', () {
+      final simpleUnions = [
+        // SimpleUnion.empty(),
+        SimpleUnion.integer(3),
+        SimpleUnion.tuple(4, 'four'),
+        SimpleUnion.string('string'),
+        SimpleUnion.builtList(BuiltList([1,2,3,4])),
+      ];
+
+      // final serializersWithPlugin = serializers.toBuilder()..addPlugin(StandardJsonPlugin()).build();
+
+      for (final simpleUnion in simpleUnions) {
+        final serialized = serializers.serialize(simpleUnion, specifiedType: FullType(SimpleUnion));
+        print(serialized);
+        final simpleUnion2 = serializers.deserialize(serialized, specifiedType: FullType(SimpleUnion));
+        expect(simpleUnion, simpleUnion2);
+      }
+      // var json = serializersWithPlugin.serialize(myStruct, specifiedType: FullType(MyStruct));
     });
   });
 }
