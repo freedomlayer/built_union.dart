@@ -69,7 +69,7 @@ UnionSpec makeUnionSpec(Element element, ConstantReader annotation) {
       unionName: unionName,
       variants: List.from(variants));
   }
-  throw Exception("A BuiltValueUnion declaration must be a class");
+  throw UnsupportedError("A BuiltValueUnion declaration must be a class");
 }
 
 
