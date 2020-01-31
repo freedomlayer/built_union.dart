@@ -1,13 +1,14 @@
-// import 'package:built_value/built_value.dart';
+import 'dart:convert';
 import 'package:built_value/serializer.dart';
-import 'package:built_union/standard_json_plugin.dart';
+import 'package:built_union/custom_json_plugin.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:test/test.dart';
-
 
 import 'values.dart';
 
 void main() {
+  final serializersWithPlugin = (serializers.toBuilder()..addPlugin(CustomJsonPlugin())).build();
+
   group('built_union', () {
     test('CompoundValue', () {
       final compoundValue1 = CompoundValue((b) => b
@@ -92,13 +93,10 @@ void main() {
         SimpleUnion.builtList(BuiltList([1,2,3,4])),
       ];
 
-      // final serializersWithPlugin = serializers.toBuilder()..addPlugin(StandardJsonPlugin()).build();
-
       for (final simpleUnion in simpleUnions) {
         final serialized = serializers.serialize(simpleUnion, specifiedType: FullType(SimpleUnion));
         final simpleUnion2 = serializers.deserialize(serialized, specifiedType: FullType(SimpleUnion));
         expect(simpleUnion, simpleUnion2);
-        // var json = serializersWithPlugin.serialize(myStruct, specifiedType: FullType(MyStruct));
       }
     });
     test('CompoundValue serialization', () {
@@ -112,24 +110,34 @@ void main() {
     });
     test('SimpleUnion json serialization', () {
       final simpleUnions = [
-        // SimpleUnion.empty(),
+        SimpleUnion.empty(),
         SimpleUnion.integer(3),
         SimpleUnion.tuple(4, 'four'),
         SimpleUnion.string('string'),
         SimpleUnion.builtList(BuiltList([1,2,3,4])),
       ];
 
-      final serializersWithPlugin = (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
 
       for (final simpleUnion in simpleUnions) {
-        print(simpleUnion);
         final serialized = serializersWithPlugin.serialize(simpleUnion, specifiedType: FullType(SimpleUnion));
-        print(serialized);
+
+        // Make sure that json encoding runs without crashing:
+        JsonEncoder encoder = new JsonEncoder.withIndent('  ');
+        encoder.convert(serialized);
+
         final simpleUnion2 = serializersWithPlugin.deserialize(serialized, specifiedType: FullType(SimpleUnion));
         expect(simpleUnion, simpleUnion2);
-        // var json = serializersWithPlugin.serialize(myStruct, specifiedType: FullType(MyStruct));
       }
 
+    });
+    test('SimpleUnion empty variant json serialization', () {
+      final simpleUnion = SimpleUnion.empty();
+      final serialized = serializersWithPlugin.serialize(simpleUnion, specifiedType: FullType(SimpleUnion));
+
+      JsonEncoder encoder = new JsonEncoder.withIndent('  ');
+      String jsonString = encoder.convert(serialized);
+      // Empty variant is expected to be represented as a single string:
+      expect(jsonString, '"empty"');
     });
   });
 }
