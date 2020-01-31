@@ -142,23 +142,11 @@ Resulting json:
 
 ## Hacking guide
 
-1. Clone the repository
-2. Add dependency overrides
-    - built_union_generator/pubspec.yaml: 
-        ```yaml
-        dependency_overrides:
-            built_union:
-                path: ../built_union
-        ```
-    - built_union_test/pubspec.yaml:
-        ```yaml
-        dependency_overrides:
-            built_union:
-                path: ../built_union
-            built_union_generator:
-                path: ../built_union_generator
-        ```
-3. Run `tool/presubmit` to format, build, analyze and test all packages.
+- Run `tool/presubmit` to format, build, analyze and test all packages.
+- To work locally, run `tool/local_deps enable`. This will make sure that
+    dependencies point to your local copy, and not to a remote copy. To restore
+    remote dependencies, run `tool/local_deps disable`.
+
 
 ## Thanks
 
