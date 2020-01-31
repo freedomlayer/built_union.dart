@@ -18,6 +18,7 @@ abstract class SimpleValue implements Built<SimpleValue, SimpleValueBuilder> {
   SimpleValue._();
 }
 
+
 @BuiltUnion()
 class SimpleUnion extends _$SimpleUnion {
   static Serializer<SimpleUnion> get serializer => _$simpleUnionSerializer;
@@ -42,7 +43,6 @@ abstract class CompoundValue
   CompoundValue._();
 }
 
-
 Serializers serializers = (new Serializers().toBuilder()
       ..add(SimpleValue.serializer)
       ..add(SimpleUnion.serializer)
@@ -52,7 +52,5 @@ Serializers serializers = (new Serializers().toBuilder()
           () => new ListBuilder<int>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
-          () => new ListBuilder<String>())
-      )
+          () => new ListBuilder<String>()))
     .build();
-
