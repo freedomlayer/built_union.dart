@@ -1,3 +1,3 @@
 library built_union;
 
-export 'src/annotations.dart';
+export 'src/annotations.dart'  ;
