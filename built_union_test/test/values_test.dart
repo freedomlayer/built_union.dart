@@ -117,7 +117,6 @@ void main() {
         SimpleUnion.builtList(BuiltList([1,2,3,4])),
       ];
 
-
       for (final simpleUnion in simpleUnions) {
         final serialized = serializersWithPlugin.serialize(simpleUnion, specifiedType: FullType(SimpleUnion));
 
