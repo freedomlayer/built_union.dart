@@ -202,7 +202,6 @@ String capitalize(String inputStr) {
 String generateIsGetter(String enumName, VariantSpec variantSpec) {
   final isMethodName = 'is' + capitalize(variantSpec.variantName);
   return 'bool get $isMethodName => _type == $enumName.${variantSpec.variantName};';
-
 }
 
 /// Generate ergonomic "Is" getters code.
@@ -288,7 +287,7 @@ String generateToString(String userClassName) {
 ///   // ... Constructors ...
 ///
 ///   // ... Match method ...
-/// 
+///
 ///   // ... ergonomic is getters ...
 ///
 ///   // ... Equal (==) operator
@@ -320,4 +319,3 @@ String generateUnionClass(UnionSpec unionSpec) {
 
   return res.join('\n');
 }
-

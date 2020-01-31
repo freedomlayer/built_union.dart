@@ -45,9 +45,8 @@ String _generateFullType(String typeName) {
   if (generics.isEmpty) {
     return 'const FullType($bareType)';
   } else {
-    final parameterFullTypes = genericItems
-        .map((item) => _generateFullType(item))
-        .join(', ');
+    final parameterFullTypes =
+        genericItems.map((item) => _generateFullType(item)).join(', ');
     final canUseConst = parameterFullTypes.startsWith('const ');
     final constOrNew = canUseConst ? 'const' : 'new';
     final constOrEmpty = canUseConst ? 'const' : '';

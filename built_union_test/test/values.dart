@@ -43,6 +43,21 @@ abstract class CompoundValue
   CompoundValue._();
 }
 
+/*
+// TODO: Generics
+// A generic union will probably look like this:
+@BuiltUnion()
+class GenericUnion<T,W> extends _$GenericUnion<T,W> {
+  static Serializer<GenericUnion> get serializer => _$genericUnionSerializer;
+
+  GenericUnion.empty() : super.empty();
+  GenericUnion.variantT(T t) : super.variantT(t);
+  GenericUnion.variantW(W w) : super.variantW(w);
+  GenericUnion.variantTW(T t, W w) : super.variantTW(t,w);
+  GenericUnion.string(String string) : super.string(string);
+}
+*/
+
 Serializers serializers = (new Serializers().toBuilder()
       ..add(SimpleValue.serializer)
       ..add(SimpleUnion.serializer)

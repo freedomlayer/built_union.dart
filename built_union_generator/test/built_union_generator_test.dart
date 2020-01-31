@@ -42,7 +42,7 @@ class SimpleUnion extends _\$SimpleUnion {
 }
 
 
-'''), contains('Something'));
+'''), contains('_\$SimpleUnion'));
     });
   });
 }
@@ -63,7 +63,7 @@ Future<String> generate(String source) async {
   // the generated output.
   String error;
   void captureError(LogRecord logRecord) {
-    if(logRecord.error != null) {
+    if (logRecord.error != null) {
       print('Error:');
       print('-------');
       print(logRecord.error);
@@ -82,9 +82,10 @@ Future<String> generate(String source) async {
 
   var writer = InMemoryAssetWriter();
   await testBuilder(builder, srcs,
-      rootPackage: pkgName, writer: writer, onLog: captureError,
+      rootPackage: pkgName,
+      writer: writer,
+      onLog: captureError,
       reader: await PackageAssetReader.currentIsolate());
-
 
 // reader: await PackageAssetReader.currentIsolate());
 
