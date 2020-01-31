@@ -4,6 +4,8 @@ import 'package:built_value/standard_json_plugin.dart';
 import 'package:built_value/serializer.dart';
 
 
+/// A json serializer plugin. Works exactly the same as the StandardJsonPlugin,
+/// except for a minor modification that allows to serialize empty union variants correctly.
 class CustomJsonPlugin extends StandardJsonPlugin {
   @override
   Object afterSerialize(Object object, FullType specifiedType) {
