@@ -1,5 +1,4 @@
 name: built_union_generator
-author: real <real@freedomlayer.org>
 version: 0.1.0
 description: >
   Dart sum-types, compatible with built_value.dart
