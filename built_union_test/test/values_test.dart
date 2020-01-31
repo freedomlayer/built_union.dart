@@ -110,6 +110,27 @@ void main() {
       final compoundValue2 = serializers.deserialize(serialized, specifiedType: FullType(CompoundValue));
       expect(compoundValue, compoundValue2);
     });
+    test('SimpleUnion json serialization', () {
+      final simpleUnions = [
+        // SimpleUnion.empty(),
+        SimpleUnion.integer(3),
+        SimpleUnion.tuple(4, 'four'),
+        SimpleUnion.string('string'),
+        SimpleUnion.builtList(BuiltList([1,2,3,4])),
+      ];
+
+      final serializersWithPlugin = (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+
+      for (final simpleUnion in simpleUnions) {
+        print(simpleUnion);
+        final serialized = serializersWithPlugin.serialize(simpleUnion, specifiedType: FullType(SimpleUnion));
+        print(serialized);
+        final simpleUnion2 = serializersWithPlugin.deserialize(serialized, specifiedType: FullType(SimpleUnion));
+        expect(simpleUnion, simpleUnion2);
+        // var json = serializersWithPlugin.serialize(myStruct, specifiedType: FullType(MyStruct));
+      }
+
+    });
   });
 }
 
