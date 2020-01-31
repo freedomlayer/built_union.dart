@@ -1,10 +1,10 @@
-## Built Union: (Sum type) values for Dart
+## Built Union: sum-types for Dart
 
 [![Build Status](https://travis-ci.com/freedomlayer/built_union.dart.svg?branch=master)](https://travis-ci.com/freedomlayer/built_union.dart)
 
 `built_union.dart` introduces Union values, also known as Tagged unions (C), Enums (Rust), Sum types (Haskell).
 
-A Union value is type that has a few different variants.  
+A Union value is type that has a few different variants.
 At any given time, the Union value has a value of a certain **single** variant.
 
 You want to use Built Union if you need to represent a type that means:
