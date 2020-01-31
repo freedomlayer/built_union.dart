@@ -13,6 +13,8 @@ if [ "$1" != "enable" ] && [ "$1" != "disable" ]; then
 fi
 
 # In any case, we first remove local dependencies:
+# The following lines means: Erase all lines starting from a line that matches a
+# certain pattern:
 sed -i '/dependency_overrides:/Q' built_union_generator/pubspec.yaml
 sed -i '/dependency_overrides:/Q' built_union_test/pubspec.yaml
 
