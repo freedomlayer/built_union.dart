@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Add override to use the local packages as dependencies.
+# This allows local development work on the packages.
+
+if [ $# -ne 0 ]; then
+  echo "Usage: tool/use_local_deps"
+  echo
+  echo "Changes dependencies to use local paths."
+fi
+
+cat >> "built_union_generator/pubspec.yaml" <<EOM
+
+dependency_overrides:
+    built_union:
+        path: ../built_union
+EOM
+
+cat >> "built_union_test/pubspec.yaml" <<EOM
+
+dependency_overrides:
+    built_union:
+        path: ../built_union
+    built_union_generator:
+        path: ../built_union_generator
+EOM
