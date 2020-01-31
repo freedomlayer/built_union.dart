@@ -12,6 +12,3 @@ dependencies:
 
 dev_dependencies:
     test: ^1.0.0
-
-# dev_dependencies:
-  # b#uild_runner: ^1.0.0
