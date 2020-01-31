@@ -1,10 +1,6 @@
-## Built Union (Sum type) values for Dart
+## Built Union: Sum types for Dart
 
-`built_union.dart` introduces Union values, also known as: 
-- Tagged unions (C)
-- Enums (Rust)
-- Sum types (Haskell)
-
+`built_union.dart` introduces Union values, also known as: Tagged unions (C), Enums (Rust), Sum types (Haskell).
 
 A Union value is type that has a few different variants. 
 At any given time, the Union value has a value of a certain **single** variant.
