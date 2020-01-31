@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Check formatting of dart files in the project
+
+set -e
+
+directories="built_union built_union_generator built_union_test"
+
+parent_directory=$PWD
+
+for directory in $directories; do
+  echo
+  echo "*** Formatting $directory..."
+  echo
+  cd "$parent_directory/$directory"
+
+  dartfmt -n --set-exit-if-changed $(find bin lib test -name \*.dart 2>/dev/null)
+
+done
+
