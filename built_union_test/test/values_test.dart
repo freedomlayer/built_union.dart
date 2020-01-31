@@ -101,6 +101,15 @@ void main() {
         // var json = serializersWithPlugin.serialize(myStruct, specifiedType: FullType(MyStruct));
       }
     });
+    test('CompoundValue serialization', () {
+      final compoundValue = CompoundValue((b) => b
+        ..simpleValue.anInt = 3
+        ..simpleUnion = SimpleUnion.tuple(4, 'four'));
+
+      final serialized = serializers.serialize(compoundValue, specifiedType: FullType(CompoundValue));
+      final compoundValue2 = serializers.deserialize(serialized, specifiedType: FullType(CompoundValue));
+      expect(compoundValue, compoundValue2);
+    });
   });
 }
 
