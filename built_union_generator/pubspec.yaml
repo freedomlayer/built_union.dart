@@ -1,6 +1,10 @@
 name: built_union_generator
 author: real <real@freedomlayer.org>
 version: 0.1.0
+description: >
+  Dart sum-types, compatible with built_value.dart
+  This library is the dev dependency.
+homepage: https://github.com/freedomlayer/built_union.dart
 
 environment:
   sdk: '>=2.6.0 <3.0.0'
