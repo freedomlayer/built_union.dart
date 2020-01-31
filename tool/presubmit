@@ -6,6 +6,11 @@ directories="built_union built_union_generator built_union_test"
 
 parent_directory=$PWD
 
+# Use local dependencies, to make sure we are testing against our code
+# and not against remote dependencies
+cd $parent_directory
+$parent_directory/tool/local_deps enable
+
 for directory in $directories; do
   echo
   echo "*** Formatting $directory..."
@@ -57,4 +62,5 @@ for directory in $directories; do
 done
 
 # Restore remote dependencies
-./tool/local_deps disable
+cd $parent_directory
+$parent_directory/tool/local_deps disable
