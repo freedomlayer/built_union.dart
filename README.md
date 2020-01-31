@@ -14,6 +14,8 @@ You will want to use Built Union if you want to represent a type that means:
 
 **Fully compatible with** [BuiltValue](https://github.com/google/built_value.dart).
 
+Created as part of the [Offst project](https://www.offst.org).
+
 ## How to use?
 
 Add to your `pubspec.yaml` file:

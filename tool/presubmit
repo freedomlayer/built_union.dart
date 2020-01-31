@@ -2,6 +2,10 @@
 
 set -e
 
+# Use local dependencies, to make sure we are testing against our code
+# and not against remote dependencies
+./tool/local_deps enable
+
 directories="built_union built_union_generator"
 
 parent_directory=$PWD
@@ -55,3 +59,6 @@ for directory in $directories; do
 
   pub run test
 done
+
+# Restore remote dependencies
+./tool/local_deps disable
