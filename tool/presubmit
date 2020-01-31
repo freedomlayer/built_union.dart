@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 set -e
 
 directories="built_union built_union_generator"
