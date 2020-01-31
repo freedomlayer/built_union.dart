@@ -1,6 +1,8 @@
 ## Built Union: sum-types for Dart
 
 [![Build Status](https://travis-ci.com/freedomlayer/built_union.dart.svg?branch=master)](https://travis-ci.com/freedomlayer/built_union.dart)
+[![built_union version](https://img.shields.io/pub/v/built_union?label=built_union)](https://pub.dev/packages/built_union)
+[![built_union_generator version](https://img.shields.io/pub/v/built_union_generator?label=built_union_generator)](https://pub.dev/packages/built_union_generator)
 
 `built_union.dart` introduces Union values, also known as Tagged unions (C), Enums (Rust), Sum types (Haskell).
 
