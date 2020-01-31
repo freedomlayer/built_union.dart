@@ -18,7 +18,6 @@ abstract class SimpleValue implements Built<SimpleValue, SimpleValueBuilder> {
   SimpleValue._();
 }
 
-
 @BuiltUnion()
 class SimpleUnion extends _$SimpleUnion {
   static Serializer<SimpleUnion> get serializer => _$simpleUnionSerializer;

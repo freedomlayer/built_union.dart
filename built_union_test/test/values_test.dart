@@ -7,7 +7,8 @@ import 'package:test/test.dart';
 import 'values.dart';
 
 void main() {
-  final serializersWithPlugin = (serializers.toBuilder()..addPlugin(CustomJsonPlugin())).build();
+  final serializersWithPlugin =
+      (serializers.toBuilder()..addPlugin(CustomJsonPlugin())).build();
 
   group('built_union', () {
     test('CompoundValue', () {
@@ -38,13 +39,16 @@ void main() {
       final simpleUnionString1 = SimpleUnion.string('String');
       expect(simpleUnionString0, simpleUnionString1);
 
-      final simpleUnionBuiltList0 = SimpleUnion.builtList(BuiltList([1,2,3,4]));
-      final simpleUnionBuiltList1 = SimpleUnion.builtList(BuiltList([1,2,3,4]));
+      final simpleUnionBuiltList0 =
+          SimpleUnion.builtList(BuiltList([1, 2, 3, 4]));
+      final simpleUnionBuiltList1 =
+          SimpleUnion.builtList(BuiltList([1, 2, 3, 4]));
       expect(simpleUnionBuiltList0, simpleUnionBuiltList1);
     });
     test('SimpleUnion match()', () {
       final simpleUnionEmpty = SimpleUnion.empty();
-      final resEmpty = simpleUnionEmpty.match(empty: () => true,
+      final resEmpty = simpleUnionEmpty.match(
+          empty: () => true,
           integer: (_) => false,
           tuple: (_1, _2) => false,
           string: (_) => false,
@@ -52,7 +56,8 @@ void main() {
       expect(resEmpty, true);
 
       final simpleUnionInteger = SimpleUnion.integer(3);
-      final resInteger = simpleUnionInteger.match(empty: () => false,
+      final resInteger = simpleUnionInteger.match(
+          empty: () => false,
           integer: (_) => true,
           tuple: (_1, _2) => false,
           string: (_) => false,
@@ -60,7 +65,8 @@ void main() {
       expect(resInteger, true);
 
       final simpleUnionTuple = SimpleUnion.tuple(4, 'four');
-      final resTuple = simpleUnionTuple.match(empty: () => false,
+      final resTuple = simpleUnionTuple.match(
+          empty: () => false,
           integer: (_) => false,
           tuple: (_1, _2) => true,
           string: (_) => false,
@@ -68,15 +74,18 @@ void main() {
       expect(resTuple, true);
 
       final simpleUnionString = SimpleUnion.string('string');
-      final resString = simpleUnionString.match(empty: () => false,
+      final resString = simpleUnionString.match(
+          empty: () => false,
           integer: (_) => false,
           tuple: (_1, _2) => false,
           string: (_) => true,
           builtList: (_) => false);
       expect(resString, true);
 
-      final simpleUnionBuiltList = SimpleUnion.builtList(BuiltList([1,2,3,4]));
-      final resBuiltList = simpleUnionBuiltList.match(empty: () => false,
+      final simpleUnionBuiltList =
+          SimpleUnion.builtList(BuiltList([1, 2, 3, 4]));
+      final resBuiltList = simpleUnionBuiltList.match(
+          empty: () => false,
           integer: (_) => false,
           tuple: (_1, _2) => false,
           string: (_) => false,
@@ -90,12 +99,14 @@ void main() {
         SimpleUnion.integer(3),
         SimpleUnion.tuple(4, 'four'),
         SimpleUnion.string('string'),
-        SimpleUnion.builtList(BuiltList([1,2,3,4])),
+        SimpleUnion.builtList(BuiltList([1, 2, 3, 4])),
       ];
 
       for (final simpleUnion in simpleUnions) {
-        final serialized = serializers.serialize(simpleUnion, specifiedType: FullType(SimpleUnion));
-        final simpleUnion2 = serializers.deserialize(serialized, specifiedType: FullType(SimpleUnion));
+        final serialized = serializers.serialize(simpleUnion,
+            specifiedType: FullType(SimpleUnion));
+        final simpleUnion2 = serializers.deserialize(serialized,
+            specifiedType: FullType(SimpleUnion));
         expect(simpleUnion, simpleUnion2);
       }
     });
@@ -104,8 +115,10 @@ void main() {
         ..simpleValue.anInt = 3
         ..simpleUnion = SimpleUnion.tuple(4, 'four'));
 
-      final serialized = serializers.serialize(compoundValue, specifiedType: FullType(CompoundValue));
-      final compoundValue2 = serializers.deserialize(serialized, specifiedType: FullType(CompoundValue));
+      final serialized = serializers.serialize(compoundValue,
+          specifiedType: FullType(CompoundValue));
+      final compoundValue2 = serializers.deserialize(serialized,
+          specifiedType: FullType(CompoundValue));
       expect(compoundValue, compoundValue2);
     });
     test('SimpleUnion json serialization', () {
@@ -114,24 +127,26 @@ void main() {
         SimpleUnion.integer(3),
         SimpleUnion.tuple(4, 'four'),
         SimpleUnion.string('string'),
-        SimpleUnion.builtList(BuiltList([1,2,3,4])),
+        SimpleUnion.builtList(BuiltList([1, 2, 3, 4])),
       ];
 
       for (final simpleUnion in simpleUnions) {
-        final serialized = serializersWithPlugin.serialize(simpleUnion, specifiedType: FullType(SimpleUnion));
+        final serialized = serializersWithPlugin.serialize(simpleUnion,
+            specifiedType: FullType(SimpleUnion));
 
         // Make sure that json encoding runs without crashing:
         JsonEncoder encoder = new JsonEncoder.withIndent('  ');
         encoder.convert(serialized);
 
-        final simpleUnion2 = serializersWithPlugin.deserialize(serialized, specifiedType: FullType(SimpleUnion));
+        final simpleUnion2 = serializersWithPlugin.deserialize(serialized,
+            specifiedType: FullType(SimpleUnion));
         expect(simpleUnion, simpleUnion2);
       }
-
     });
     test('SimpleUnion empty variant json serialization', () {
       final simpleUnion = SimpleUnion.empty();
-      final serialized = serializersWithPlugin.serialize(simpleUnion, specifiedType: FullType(SimpleUnion));
+      final serialized = serializersWithPlugin.serialize(simpleUnion,
+          specifiedType: FullType(SimpleUnion));
 
       JsonEncoder encoder = new JsonEncoder.withIndent('  ');
       String jsonString = encoder.convert(serialized);
@@ -140,4 +155,3 @@ void main() {
     });
   });
 }
-
