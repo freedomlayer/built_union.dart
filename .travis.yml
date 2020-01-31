@@ -1,4 +1,5 @@
 language: dart
 dart: dev
 script:
+  - tool/check_format
   - tool/presubmit
