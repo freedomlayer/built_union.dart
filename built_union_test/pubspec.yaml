@@ -1,5 +1,5 @@
 name: built_union_test
-version: 0.1.0
+version: 0.1.1
 description: >
   Dart sum-types, compatible with built_value.dart
   This library contains integration tests for built_union.dart
