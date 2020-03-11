@@ -92,6 +92,19 @@ void main() {
           builtList: (_) => true);
       expect(resBuiltList, true);
     });
+    test('SimpleUnion toString()', () {
+      final simpleUnionEmpty = SimpleUnion.empty();
+      expect(simpleUnionEmpty.toString(), 'SimpleUnion.empty()');
+
+      final simpleUnionInteger = SimpleUnion.integer(3);
+      expect(simpleUnionInteger.toString(), 'SimpleUnion.integer(3)');
+
+      final simpleUnionTuple = SimpleUnion.tuple(4, 'four');
+      expect(simpleUnionTuple.toString(), 'SimpleUnion.tuple(4, four)');
+
+      final simpleUnionString = SimpleUnion.string('five');
+      expect(simpleUnionString.toString(), 'SimpleUnion.string(five)');
+    });
 
     test('SimpleUnion serialization', () {
       final simpleUnions = [
