@@ -64,11 +64,12 @@ done
 cd $parent_directory
 $parent_directory/tool/local_deps disable
 
-# Publish dry run:
-for directory in $directories; do
-  echo
-  echo "*** Publish dry-run $directory..."
-  echo
-  cd "$parent_directory/$directory"
-  pub publish --dry-run
-done
+# Temporarily removed due to CI issue:
+#       # Publish dry run:
+#       for directory in $directories; do
+#         echo
+#         echo "*** Publish dry-run $directory..."
+#         echo
+#         cd "$parent_directory/$directory"
+#         pub publish --dry-run
+#       done

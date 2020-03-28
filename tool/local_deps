@@ -6,7 +6,7 @@ set -e
 # This allows local development work on the packages.
 
 if [ "$1" != "enable" ] && [ "$1" != "disable" ]; then
-  echo "Usage: tool/use_local_deps"
+  echo "Usage: use_local_deps (enable|disable)"
   echo
   echo "Changes dependencies to use local paths."
   exit 1
