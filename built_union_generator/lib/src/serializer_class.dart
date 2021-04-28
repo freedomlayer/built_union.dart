@@ -15,12 +15,12 @@ String decapitalize(String inputStr) {
 ///
 /// 1) Empty variant:
 /// ```
-/// empty: () => <Object>['empty'],
+/// empty: () => <Object?>['empty'],
 /// ```
 ///
 /// 2) Single value variant:
 /// ```
-/// integer: (value0) => <Object>[
+/// integer: (value0) => <Object?>[
 ///     'integer',
 ///     serializers.serialize(value0, specifiedType: const FullType(int))
 /// ],
@@ -28,9 +28,9 @@ String decapitalize(String inputStr) {
 ///
 /// 3) Multiple values variant:
 /// ```
-/// tuple: (value0, value1) => <Object>[
+/// tuple: (value0, value1) => <Object?>[
 ///     'tuple',
-///     <Object>[serializers.serialize(value0, specifiedType: const FullType(int)),
+///     <Object?>[serializers.serialize(value0, specifiedType: const FullType(int)),
 ///     serializers.serialize(value1,
 ///     specifiedType: const FullType(String))]
 /// ],
@@ -38,13 +38,13 @@ String decapitalize(String inputStr) {
 String generateSerializeMatchArm(VariantSpec variantSpec) {
   if (variantSpec.variantArgs.isEmpty) {
     // Empty variant
-    return '''${variantSpec.variantName}: () => <Object>['${variantSpec.variantName}'],''';
+    return '''${variantSpec.variantName}: () => <Object?>['${variantSpec.variantName}'],''';
   }
 
   if (variantSpec.variantArgs.length == 1) {
     /// This variant contains exactly one argument
     final argSpec = variantSpec.variantArgs[0];
-    return '''${variantSpec.variantName}: (${argSpec.argName}) => <Object>['${variantSpec.variantName}',\n''' +
+    return '''${variantSpec.variantName}: (${argSpec.argName}) => <Object?>['${variantSpec.variantName}',\n''' +
         'serializers.serialize(${argSpec.argName}, specifiedType: ${generateFullType(argSpec.argType.toString())})\n' +
         '],';
   }
@@ -53,12 +53,12 @@ String generateSerializeMatchArm(VariantSpec variantSpec) {
   List<String> res = [];
   res.add('${variantSpec.variantName}: (');
   res.add(variantSpec.variantArgs.map((argSpec) => argSpec.argName).join(','));
-  res.add(') => <Object>[');
+  res.add(') => <Object?>[');
   res.add(''''${variantSpec.variantName}',''');
-  res.add('<Object>[');
+  res.add('<Object?>[');
   res.add(variantSpec.variantArgs
       .map((argSpec) =>
-          'serializers.serialize(${argSpec.argName}, specifiedType: ${generateFullType(argSpec.argType.toString())})')
+          'serializers.serialize(${argSpec.argName}, specifiedType: ${generateFullType(argSpec.argType.toString())}) as ${argSpec.argType.toString()}')
       .join(','));
   res.add(']');
   res.add('],');
@@ -83,7 +83,7 @@ String generateSerializeMethod(UnionSpec unionSpec) {
   // Begin method scope:
   res.add('@override');
   res.add(
-      'Iterable<Object> serialize(Serializers serializers, ${unionSpec.unionName} object,');
+      'Iterable<Object?> serialize(Serializers serializers, ${unionSpec.unionName} object,');
   res.add('{FullType specifiedType = FullType.unspecified}) {');
 
   // Begin match:
@@ -119,7 +119,7 @@ String generateSerializeMethod(UnionSpec unionSpec) {
 ///   iterator.moveNext();
 ///   final dynamic value = iterator.current;
 ///   result = SimpleUnion.integer(serializers.deserialize(value,
-///       specifiedType: const FullType(int)));
+///       specifiedType: const FullType(int)) as int);
 ///   break;
 /// ```
 ///
@@ -133,9 +133,9 @@ String generateSerializeMethod(UnionSpec unionSpec) {
 ///   final dynamic value1 = innerIterator.current;
 ///
 ///   result = SimpleUnion.tuple(
-///       serializers.deserialize(value0, specifiedType: const FullType(int)),
+///       serializers.deserialize(value0, specifiedType: const FullType(int)) as int,
 ///       serializers.deserialize(value1,
-///           specifiedType: const FullType(String)));
+///           specifiedType: const FullType(String)) as String);
 ///   break;
 /// ```
 String generateDeserializeSwitchCase(
@@ -154,7 +154,7 @@ String generateDeserializeSwitchCase(
         'iterator.moveNext();\n' +
         'result = $userClassName.${variantSpec.variantName}(' +
         'serializers.deserialize(iterator.current, ' +
-        'specifiedType: ${generateFullType(argSpec.argType.toString())}));\n' +
+        'specifiedType: ${generateFullType(argSpec.argType.toString())}) as ${argSpec.argType.toString()});\n' +
         'break;';
   }
 
@@ -176,7 +176,7 @@ String generateDeserializeSwitchCase(
   res.add(variantSpec.variantArgs
       .map((argSpec) =>
           'serializers.deserialize(${argSpec.argName},' +
-          'specifiedType: ${generateFullType(argSpec.argType.toString())}),')
+          'specifiedType: ${generateFullType(argSpec.argType.toString())}) as ${argSpec.argType.toString()},')
       .join('\n'));
   res.add(');');
   res.add('break;');
@@ -188,7 +188,7 @@ String generateDeserializeSwitchCase(
 /// Example:
 /// ```
 /// @override
-/// SimpleUnion deserialize(Serializers serializers, Iterable<Object> serialized,
+/// SimpleUnion deserialize(Serializers serializers, Iterable<Object?> serialized,
 ///     {FullType specifiedType = FullType.unspecified}) {
 ///
 ///   final iterator = serialized.iterator;
@@ -213,7 +213,7 @@ String generateDeserializeMethod(UnionSpec unionSpec) {
   // Method declaration:
   res.add('@override');
   res.add(
-      '${unionSpec.unionName} deserialize(Serializers serializers, Iterable<Object> serialized, ');
+      '${unionSpec.unionName} deserialize(Serializers serializers, Iterable<Object?> serialized, ');
   res.add('{FullType specifiedType = FullType.unspecified}) {');
 
   // Some variables:

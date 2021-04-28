@@ -7,7 +7,7 @@ import 'package:built_value/serializer.dart';
 /// except for a minor modification that allows to serialize empty union variants correctly.
 class CustomJsonPlugin extends StandardJsonPlugin {
   @override
-  Object afterSerialize(Object object, FullType specifiedType) {
+  Object? afterSerialize(Object? object, FullType specifiedType) {
     if (object is List &&
         specifiedType.root != BuiltList &&
         specifiedType.root != BuiltSet &&
@@ -27,7 +27,7 @@ class CustomJsonPlugin extends StandardJsonPlugin {
   }
 
   @override
-  Object beforeDeserialize(Object object, FullType specifiedType) {
+  Object? beforeDeserialize(Object? object, FullType specifiedType) {
     if (object is Map && specifiedType.root != JsonObject) {
       if (specifiedType.isUnspecified) {
         return super.beforeDeserialize(object, specifiedType);

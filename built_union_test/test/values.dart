@@ -1,10 +1,11 @@
 library values;
 
+import 'dart:convert';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_union/built_union.dart';
-import 'package:meta/meta.dart';
 
 part 'values.g.dart';
 
@@ -57,10 +58,70 @@ class GenericUnion<T,W> extends _$GenericUnion<T,W> {
 }
 */
 
+@BuiltValue(instantiable: false)
+abstract class ContentBitsModel {
+  ContentBitsModel rebuild(void Function(ContentBitsModelBuilder) updates);
+
+  ContentBitsModelBuilder toBuilder();
+}
+
+abstract class SkillContentBitsModel
+    implements
+        ContentBitsModel,
+        Built<SkillContentBitsModel, SkillContentBitsModelBuilder> {
+  SkillContentBitsModel._();
+
+  factory SkillContentBitsModel(
+          [void Function(SkillContentBitsModelBuilder) updates]) =
+      _$SkillContentBitsModel;
+
+  static Serializer<SkillContentBitsModel> get serializer =>
+      _$skillContentBitsModelSerializer;
+
+  static SkillContentBitsModel fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        SkillContentBitsModel.serializer, json.decode(jsonString))!;
+  }
+}
+
+abstract class StoryContentBitsModel
+    implements
+        ContentBitsModel,
+        Built<StoryContentBitsModel, StoryContentBitsModelBuilder> {
+  StoryContentBitsModel._();
+
+  factory StoryContentBitsModel(
+          [void Function(StoryContentBitsModelBuilder) updates]) =
+      _$StoryContentBitsModel;
+
+  static Serializer<StoryContentBitsModel> get serializer =>
+      _$storyContentBitsModelSerializer;
+
+  static StoryContentBitsModel fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        StoryContentBitsModel.serializer, json.decode(jsonString))!;
+  }
+}
+
+@BuiltUnion()
+class ContentBitsUnion extends _$ContentBitsUnion {
+  static Serializer<ContentBitsUnion> get serializer =>
+      _$contentBitsUnionSerializer;
+
+  ContentBitsUnion.unknown() : super.unknown();
+
+  ContentBitsUnion.skill(SkillContentBitsModel model) : super.skill(model);
+
+  ContentBitsUnion.story(StoryContentBitsModel model) : super.story(model);
+}
+
 Serializers serializers = (new Serializers().toBuilder()
       ..add(SimpleValue.serializer)
       ..add(SimpleUnion.serializer)
       ..add(CompoundValue.serializer)
+      ..add(SkillContentBitsModel.serializer)
+      ..add(ContentBitsUnion.serializer)
+      ..add(StoryContentBitsModel.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(int)]),
           () => new ListBuilder<int>())
