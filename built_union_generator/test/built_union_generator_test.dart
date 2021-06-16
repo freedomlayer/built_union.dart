@@ -61,7 +61,7 @@ Future<String> generate(String source) async {
 
   // Capture any error from generation; if there is one, return that instead of
   // the generated output.
-  String error;
+  String? error;
   void captureError(LogRecord logRecord) {
     if (logRecord.error != null) {
       print('Error:');

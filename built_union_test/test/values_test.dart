@@ -46,16 +46,6 @@ void main() {
       expect(simpleUnionBuiltList0, simpleUnionBuiltList1);
     });
 
-    test('SimpleUnion constructors null not allowed', () {
-      expect(() => SimpleUnion.integer(null), throwsA(isA<AssertionError>()));
-      expect(() => SimpleUnion.tuple(4, null), throwsA(isA<AssertionError>()));
-      expect(() => SimpleUnion.tuple(null, 'four'),
-          throwsA(isA<AssertionError>()));
-      expect(
-          () => SimpleUnion.tuple(null, null), throwsA(isA<AssertionError>()));
-      expect(() => SimpleUnion.string(null), throwsA(isA<AssertionError>()));
-    });
-
     test('SimpleUnion match()', () {
       final simpleUnionEmpty = SimpleUnion.empty();
       final resEmpty = simpleUnionEmpty.match(

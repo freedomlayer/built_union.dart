@@ -49,12 +49,6 @@ String generateClassConstructor(
   // Set type:
   res.add('_type = $enumName.${variant.variantName}, ');
 
-  // Assert that arguments are not null:
-  for (final argSpec in variant.variantArgs) {
-    res.add(
-        "assert(${argSpec.argName} != null, '$className constructor argument ${argSpec.argName} can not be null!'), ");
-  }
-
   // Set values:
   res.add('_values = [');
 
@@ -116,14 +110,14 @@ String generateClassConstructors(UnionSpec unionSpec) {
 /// Generate one match argument
 /// Example:
 /// ```
-/// @required T Function(int, String) tuple,
+/// required T Function(int, String) tuple,
 /// ```
 String generateMatchArg(VariantSpec variantSpec) {
   List<String> argTypes = [];
   for (final arg in variantSpec.variantArgs) {
     argTypes.add(arg.argType.toString());
   }
-  return '@required T Function(${argTypes.join(',')}) ${variantSpec.variantName}';
+  return 'required T Function(${argTypes.join(',')}) ${variantSpec.variantName}';
 }
 
 /// Generate one match body switch case
@@ -139,7 +133,8 @@ String generateMatchCase(String enumName, VariantSpec variantSpec) {
 
   List<String> values = [];
   for (var i = 0; i < variantSpec.variantArgs.length; ++i) {
-    values.add('_values[$i]');
+    values
+        .add('_values[$i] as ${variantSpec.variantArgs[i].argType.toString()}');
   }
 
   res.add('\treturn ${variantSpec.variantName}(${values.join(',')});');
@@ -151,26 +146,26 @@ String generateMatchCase(String enumName, VariantSpec variantSpec) {
 /// Example:
 /// ```
 /// T match<T>({
-///   @required T Function() empty,
-///   @required T Function(int) integer,
-///   @required T Function(int, String) tuple,
-///   @required T Function(String) string,
-///   @required T Function(Foo<int>) fooInt,
-///   @required T Function(Foo<String>) fooString,
+///   required T Function() empty,
+///   required T Function(int) integer,
+///   required T Function(int, String) tuple,
+///   required T Function(String) string,
+///   required T Function(Foo<int>) fooInt,
+///   required T Function(Foo<String>) fooString,
 /// }) {
 ///   switch (_type) {
 ///     case _$SimpleUnionType.empty:
 ///       return empty();
 ///     case _$SimpleUnionType.integer:
-///       return integer(_values[0]);
+///       return integer(_values[0] as int);
 ///     case _$SimpleUnionType.tuple:
-///       return tuple(_values[0], _values[1]);
+///       return tuple(_values[0] as int, _values[1] as String);
 ///     case _$SimpleUnionType.string:
-///       return string(_values[0]);
+///       return string(_values[0] as String);
 ///     case _$SimpleUnionType.fooInt:
-///       return fooInt(_values[0]);
+///       return fooInt(_values[0] as Foo<int>);
 ///     case _$SimpleUnionType.fooString:
-///       return fooString(_values[0]);
+///       return fooString(_values[0] as Foo<String>);
 ///     default:
 ///       throw StateError('unknown type');
 ///   }

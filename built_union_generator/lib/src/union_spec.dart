@@ -9,8 +9,8 @@ import 'package:source_gen/source_gen.dart';
 @immutable
 class ArgSpec {
   const ArgSpec({
-    @required this.argName,
-    @required this.argType,
+    required this.argName,
+    required this.argType,
   });
 
   final String argName;
@@ -23,8 +23,8 @@ class ArgSpec {
 @immutable
 class VariantSpec {
   const VariantSpec({
-    @required this.variantName,
-    @required this.variantArgs,
+    required this.variantName,
+    required this.variantArgs,
   });
 
   /// Name of the variant. Derived from the name of a constructor
@@ -38,8 +38,8 @@ class VariantSpec {
 @immutable
 class UnionSpec {
   const UnionSpec({
-    @required this.unionName,
-    @required this.variants,
+    required this.unionName,
+    required this.variants,
   });
 
   /// Name of the union as specified in the class declaration
@@ -63,7 +63,7 @@ UnionSpec makeUnionSpec(Element element, ConstantReader annotation) {
     final unionName = element.name;
 
     final variants = element.constructors
-        .where((ctor) => ctor.name?.isNotEmpty == true && !ctor.isFactory)
+        .where((ctor) => ctor.name.isNotEmpty && !ctor.isFactory)
         .map(__makeVariantSpec);
 
     return UnionSpec(unionName: unionName, variants: List.from(variants));

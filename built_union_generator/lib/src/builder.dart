@@ -14,7 +14,7 @@ Builder builtUnionBuilder(BuilderOptions options) =>
 class BuiltUnionGenerator
     extends GeneratorForAnnotation<annotations.BuiltUnion> {
   @override
-  Object generateForAnnotatedElement(
+  dynamic generateForAnnotatedElement(
           Element element, ConstantReader annotation, BuildStep buildStep) =>
       generateBuiltUnion(makeUnionSpec(element, annotation));
 }
